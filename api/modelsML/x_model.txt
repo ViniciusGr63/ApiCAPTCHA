@@ -1,0 +1,4 @@
+from ..modelsML.base_model import BaseModel
+class XModel(BaseModel):
+    def __init__(self):
+        super().__init__('x_model.pkl')
