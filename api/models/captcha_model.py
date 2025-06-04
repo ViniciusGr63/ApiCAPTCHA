@@ -9,6 +9,7 @@ class MLModels:
     def __init__(self):
         self.triangle = TriangleModel()
         self.triangle.load()
+        
         # self.square = SquareModel()
         # self.square.load()
         # self.circle = CircleModel()
@@ -26,6 +27,7 @@ class MLModels:
             # 'circle': self.circle.predict(features)[0],
             # 'x': self.x.predict(features)[0]
         }
+        
         # Seleciona o modelo que retornou 1, ou nenhum
         for shape, pred in results.items():
             if pred == 1:
