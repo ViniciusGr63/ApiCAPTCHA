@@ -1,6 +1,9 @@
 # app captcha 
 # python -m api.captcha_app
-# source venv/bin/activate
+# source venv/bin/activate 
+# gunicorn "api.captcha_app:create_app()"
+
+
 
 
 
