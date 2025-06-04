@@ -4,6 +4,18 @@ from sklearn.neural_network import MLPClassifier
 import cv2
 import numpy as np
 
+
+
+# Caminho absoluto para a pasta com as imagens de triângulos
+base_path = os.path.dirname(os.path.realpath(__file__))  # Obtém o caminho do script atual
+
+# Corrigir a criação do caminho para a pasta de imagens
+image_folder = os.path.join(base_path, 'triangles_images')  # Não adicionar 'modelsML' duas vezes
+
+# Para a imagem de teste
+new_image_path = os.path.join(base_path, 'triangles_images', 'trianguloML.png')
+
+
 class TriangleModel:
     def __init__(self):
         base_dir = os.path.dirname(__file__)
@@ -27,61 +39,70 @@ class TriangleModel:
         return self.model.predict(X)
 
 
-# Função para extrair características da imagem
+# Função para extrair características de imagens
 def extract_features(image_path):
-    # Carregar imagem
     image = cv2.imread(image_path)
 
     if image is None:
         raise ValueError(f"Erro ao carregar a imagem: {image_path}")
 
     # Redimensionar a imagem
-    image = cv2.resize(image, (420, 620))  # Tamanho padrão
+    image = cv2.resize(image, (420, 620))
 
     # Converter para escala de cinza
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    # Aplicar threshold (binarizar a imagem)
+    # Binaria a imagem
     _, thresh = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
 
-    # Encontrar contornos
     contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    # Características geométricas
     features = []
-    
     for contour in contours:
-        # Contorno convexo
         hull = cv2.convexHull(contour)
         perimeter = cv2.arcLength(hull, True)  # Perímetro
         area = cv2.contourArea(hull)  # Área
 
-        # Aproximação de polígonos (simplificar o contorno)
         epsilon = 0.02 * perimeter
         approx = cv2.approxPolyDP(hull, epsilon, True)
 
-        # Contagem de vértices (dependendo da forma, podemos usar esse número para distinguir formas)
+        # Número de vértices
         num_vertices = len(approx)
 
         # Adicionar as características
         features.append([area, perimeter, num_vertices])
 
-    # Se não encontrar contornos, retornar uma lista vazia
+    # Se não encontrar contornos, retornar vazio
     if len(features) == 0:
         return []
 
-    return features
+    # Retorna apenas o primeiro conjunto de características para cada imagem
+    return features[0]
 
 
-# Função para treinar o modelo
-def train_model():
-    # Dados fictícios para treino (essas são as características das imagens já extraídas)
-    X = [
-        [500, 100, 3],  # Exemplo de um triângulo
-        [900, 120, 4],  # Exemplo de um quadrado
-        [700, 150, 5]   # Exemplo de um pentágono
-    ]
-    y = [0, 1, 2]  # 0 = Triângulo, 1 = Quadrado, 2 = Pentágono
+# Função para treinar o modelo com imagens reais de triângulos
+def train_model_with_images(image_folder):
+    X = []
+    y = []
+
+    # Verifica se o diretório de imagens existe
+    if not os.path.exists(image_folder):
+        raise FileNotFoundError(f"O diretório {image_folder} não foi encontrado")
+
+    for image_name in os.listdir(image_folder):
+        image_path = os.path.join(image_folder, image_name)
+
+        # Extrai as características da imagem
+        features = extract_features(image_path)
+
+        # Se a imagem tiver características extraídas, adicione ao conjunto de dados
+        if features:
+            X.append(features)  # Adiciona o vetor de características
+            y.append(0)  # Rótulo "0" para triângulo
+
+    # Converte X e y para arrays do numpy
+    X = np.array(X)
+    y = np.array(y)
 
     # Criar e treinar o modelo
     model = TriangleModel()
@@ -97,15 +118,18 @@ def predict_shape(image_path, model):
         print(f"Não foi possível extrair características da imagem: {image_path}")
         return
 
-    # O modelo espera uma lista de características. Podemos passar as características de uma imagem
-    predictions = model.predict(new_features)
-    print("Previsão da forma:", predictions)
+    # O modelo espera uma lista de características
+    prediction = model.predict([new_features])  # Passa uma lista de características
+    print("Previsão da forma:", "Triângulo" if prediction[0] == 0 else "Desconhecido")
 
 
 # Função principal para executar
 if __name__ == "__main__":
-    model = train_model()  # Treinar o modelo
+
+    
+    # Treinar o modelo com imagens de triângulos
+    model = train_model_with_images(image_folder)
 
     # Testar com uma nova imagem (garanta que a imagem está no mesmo diretório do script)
-    new_image_path = 'trianguloML.png'  # Caminho correto para a imagem
+
     predict_shape(new_image_path, model)  # Prever a forma com a imagem

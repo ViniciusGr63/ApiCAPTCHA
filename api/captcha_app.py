@@ -17,6 +17,7 @@
 # │   ├── models/
 # │   │     └── captcha_model.py         # Wrapper para os 4 modelos ML   
 # │   ├── modelsML/                      # Modelos treinados (pkl)
+# │   │     ├── triangles_images/triangles_images/triamguloML.png
 # │   │     ├── base_model.py            # Classe base comum para as redes
 # │   │     ├── triangle_model.py        # Rede neural para Triângulo
 # │   │     ├── square_model.py          # Rede neural para Quadrado
