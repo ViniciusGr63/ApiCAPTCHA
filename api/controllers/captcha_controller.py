@@ -12,11 +12,7 @@ def recognize():
     
     image_file = request.files['image']
     image = image_file.read()
-
-    # Pré-processa a imagem para extrair features compatíveis com ML
-    features = preprocess_image(image)
-
-    # Prediz a forma
-    shape = ml_models.predict_shape(features)
+    features = preprocess_image(image)# Pré-processa a imagem para extrair features compatíveis com ML
+    shape = ml_models.predict_shape(features) # Prediz a forma
 
     return jsonify({'shape': shape})
