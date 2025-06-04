@@ -1,4 +1,8 @@
-# app captcha
+# app captcha 
+# python -m api.captcha_app
+# source venv/bin/activate
+
+
 
 # ApiCAPTCHA/
 # ├── api/
