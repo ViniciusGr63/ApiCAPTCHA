@@ -25,23 +25,10 @@ import numpy as np
 import io
 import cv2
 
-
 def preprocess_image(image_bytes, img_size=(28, 28)):
-    # Abre imagem a partir dos bytes
     image = Image.open(io.BytesIO(image_bytes)).convert('L')  # escala de cinza
-    
-    # Converte para numpy array
     img_np = np.array(image)
-    
-    # Redimensiona para img_size usando cv2
     img_resized = cv2.resize(img_np, img_size)
-    
-    # Normaliza pixels para [0, 1]
     img_normalized = img_resized.astype(np.float32) / 255.0
-    
-    # Achata para vetor 1D
     img_flat = img_normalized.flatten().reshape(1, -1)
-    
     return img_flat
-
-   
