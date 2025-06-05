@@ -3,6 +3,7 @@
 # source venv/bin/activate 
 # gunicorn "api.captcha_app:create_app()"
 
+# python triangle_model.py dentro da pasta mlmodels, gera o pkl
 
 
 
