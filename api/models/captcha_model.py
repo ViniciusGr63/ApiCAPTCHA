@@ -26,6 +26,7 @@ class MLModels:
         }
         
         for shape, pred in results.items():
-            if pred == 1:  
+            
+            if pred == 0:  
                 return shape
         return "unknown"
