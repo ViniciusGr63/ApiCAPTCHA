@@ -132,23 +132,18 @@ class Shapes:
         print("Relatório de classificação na validação:")
         print(classification_report(y_val, y_pred, target_names=self.class_names))
 
-    def predict(self, img_path):
-        # Carrega imagem e converte para escala de cinza
+        def predict(self, features):
+        # features já é um vetor numpy (1, -1)
+          pred_idx = self.model.predict(features)[0]
+        return self.class_names[pred_idx]
+
+    def preprocess_image_from_path(self, img_path):
         img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
         if img is None:
             raise ValueError(f"Imagem não encontrada ou inválida: {img_path}")
-        
-        # Redimensiona para tamanho esperado
         img = cv2.resize(img, self.img_size)
-        
-        # Normaliza pixels para [0,1]
         img = img.astype(np.float32) / 255.0
-        
-        # Achata imagem para vetor e prepara para predição
-        img_flat = img.flatten().reshape(1, -1)
-        
-        pred_idx = self.model.predict(img_flat)[0]
-        return self.class_names[pred_idx]
+        return img.flatten().reshape(1, -1)
 
     def save_model(self, path=None):
         if path is None:
