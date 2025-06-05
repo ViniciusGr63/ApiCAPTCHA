@@ -25,26 +25,23 @@ import numpy as np
 import io
 import cv2
 
-def preprocess_image(image_bytes):
-    image = Image.open(io.BytesIO(image_bytes)).convert('L')
-    image_cv = np.array(image)
 
-    # Aplica threshold binário para contornos
-    _, thresh = cv2.threshold(image_cv, 127, 255, cv2.THRESH_BINARY)
+def preprocess_image(image_bytes, img_size=(28, 28)):
+    # Abre imagem a partir dos bytes
+    image = Image.open(io.BytesIO(image_bytes)).convert('L')  # escala de cinza
+    
+    # Converte para numpy array
+    img_np = np.array(image)
+    
+    # Redimensiona para img_size usando cv2
+    img_resized = cv2.resize(img_np, img_size)
+    
+    # Normaliza pixels para [0, 1]
+    img_normalized = img_resized.astype(np.float32) / 255.0
+    
+    # Achata para vetor 1D
+    img_flat = img_normalized.flatten().reshape(1, -1)
+    
+    return img_flat
 
-    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-    area = 0
-    perimeter = 0
-    num_vertices = 0
-
-    for contour in contours:
-        hull = cv2.convexHull(contour)
-        area = cv2.contourArea(hull)
-        perimeter = cv2.arcLength(hull, True)
-        approx = cv2.approxPolyDP(hull, 0.02 * perimeter, True)
-        num_vertices = len(approx)
-
-    # Retorna numpy array 2D, igual ao treino
-    return np.array([[area, perimeter, num_vertices]])
    

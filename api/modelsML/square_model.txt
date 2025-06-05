@@ -1,6 +1,0 @@
-from ..modelsML.base_model import BaseModel
-
-
-class SquareModel(BaseModel):
-    def __init__(self):
-        super().__init__('square_model.pkl')

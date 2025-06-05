@@ -1,5 +1,0 @@
-from ..modelsML.base_model import BaseModel
-
-class CircleModel(BaseModel):
-    def __init__(self):
-        super().__init__('circle_model.pkl')

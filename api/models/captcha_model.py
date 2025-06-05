@@ -1,32 +1,17 @@
 
-from ..modelsML.triangle_model import TriangleModel
-# from ..modelsML.square_model import SquareModel
-# from ..modelsML.circle_model import CircleModel
-# from ..modelsML.x_model import XModel
+from ..modelsML.shapes import Shapes
+
 import numpy as np
+
+
 
 class MLModels:
     def __init__(self):
-        self.triangle = TriangleModel()
-        self.triangle.load()
-        
-        # self.square = SquareModel()
-        # self.square.load()
-        # self.circle = CircleModel()
-        # self.circle.load()
-        # self.x = XModel()
-        # self.x.load()
+        self.shape = Shapes()
+        self.shape.load_data()
+        # Mapeamento dos índices para nomes das classes
+        self.class_map = {0: 'triangle', 1: 'square', 2: 'circle'}
 
     def predict_shape(self, features):
-        results = {
-            'triangle': self.triangle.predict(features)[0],  # pegar o primeiro e único valor
-            # 'square': self.square.predict(features)[0],
-            # 'circle': self.circle.predict(features)[0],
-            # 'x': self.x.predict(features)[0]
-        }
-        
-        for shape, pred in results.items():
-            
-            if pred == 0:  
-                return shape
-        return "unknown"
+        pred_class_idx = self.shape.predict(features)[0]
+        return self.class_map.get(pred_class_idx, "unknown")

@@ -5,6 +5,7 @@
 
 # python triangle_model.py dentro da pasta mlmodels, gera o pkl
 
+#pip freeze > requirements.txt atualiza requirements
 
 
 
@@ -18,12 +19,12 @@
 # │   ├── models/
 # │   │     └── captcha_model.py         # Wrapper para os 4 modelos ML   
 # │   ├── modelsML/                      # Modelos treinados (pkl)
-# │   │     ├── triangles_images/triangles_images/triamguloML.png
-# │   │     ├── base_model.py            # Classe base comum para as redes
-# │   │     ├── triangle_model.py        # Rede neural para Triângulo
-# │   │     ├── square_model.py          # Rede neural para Quadrado
-# │   │     ├── circle_model.py          # Rede neural para Círculo
-# │   │     └── x_model.py               # Rede neural para X                    
+# │   │     ├── shapes/
+# │   │     │  ├── circles           
+# │   │     │  ├── squares       
+# │   │     │  ├── triangles         
+# │   │     ├── shapes_model.joblib          # treino
+# │   │     └── shapes.py                    # Rede neural para X                    
 # │   │     
 # │   └── utils/
 # │         └── image_preprocessing.py   # Funções para tratar a imagem recebida
