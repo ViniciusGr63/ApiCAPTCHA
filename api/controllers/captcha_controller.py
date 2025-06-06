@@ -14,10 +14,9 @@ def recognize():
     image_bytes = image_file.read()
 
     shape_exp = request.form.get('shape')
-    
-    
-    
-    shape = ml_models.predict_shape(image_bytes,shape_exp)
+
+    features = preprocess_image(image_bytes)  
+    shape = ml_models.predict_shape(features,shape_exp)
     
     return jsonify({'result': bool(shape)})
 
