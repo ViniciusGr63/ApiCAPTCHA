@@ -7,12 +7,17 @@ ml_models = MLModels()
 def recognize():
     if 'image' not in request.files:
         return jsonify({'error': 'No image provided'}), 400
+    if 'shape' not in request.files:
+        return jsonify({'error': 'No image provided'}), 400
     
     image_file = request.files['image']
     image_bytes = image_file.read()
+
+    shape_exp = request.form.get('shape')
     
-    features = preprocess_image(image_bytes)  # já retorna vetor (1, -1)
     
-    shape = ml_models.predict_shape(features)
     
-    return jsonify({'shape': shape})
+    shape = ml_models.predict_shape(image_bytes,shape_exp)
+    
+    return jsonify({'result': bool(shape)})
+
