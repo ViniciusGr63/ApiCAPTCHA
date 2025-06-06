@@ -132,10 +132,10 @@ class Shapes:
         print("Relatório de classificação na validação:")
         print(classification_report(y_val, y_pred, target_names=self.class_names))
 
-        def predict(self, features):
+    def predict(self, features):
         # features já é um vetor numpy (1, -1)
           pred_idx = self.model.predict(features)[0]
-        return self.class_names[pred_idx]
+          return self.class_names[pred_idx]
 
     def preprocess_image_from_path(self, img_path):
         img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
