@@ -1,5 +1,5 @@
 from flask import request, jsonify
-from ..models import MLModels
+from ..models.captcha_model import MLModels
 from ..utils.image_preprocessing import preprocess_image
 
 ml_models = MLModels()
