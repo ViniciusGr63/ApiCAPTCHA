@@ -169,5 +169,7 @@ if __name__ == "__main__":
     shapes.load_model()
 
     # Teste uma previsão
-    resultado = shapes.predict('square.jpg')
+    features = shapes.preprocess_image_from_path('square.jpg')  
+    resultado = shapes.predict(features) 
     print(f"A forma na imagem 'square.jpg' é: {resultado}")
+
