@@ -52,10 +52,12 @@ from api.captcha_routes import main
 def create_app():
     app = Flask(__name__)
 
+    CORS(app)
+
+
     # Libera o CORS para origens específicas
     CORS(app, resources={r"/captcha/*": {"origins": [
-        "http://localhost:3000",
-        "https://super-duper-train-gg74r669x942vx6w-3000.app.github.dev"
+        "https://obscure-spoon-4xjj4wgrxj72jvr-3000.app.github.dev"
     ]}})
 
     app.register_blueprint(main)
