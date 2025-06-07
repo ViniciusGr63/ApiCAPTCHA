@@ -45,24 +45,20 @@
 
 
 
-from api.captcha_routes import main  
-from flask import Flask
 from flask import Flask
 from flask_cors import CORS
-from fastapi import FasTAPI 
-from fastapi.middleware.cors import CORSMiddleware
+from api.captcha_routes import main
 
 def create_app():
-    origins = [ "http://localhost:3000", # se estiver rodando localmente
-    "https://super-duper-train-gg74r669x942vx6w-3000.app.github.dev", # GitHub Codespaces   
-    ]   
-    app.add_middleware( CORSMiddleware, allow_origins=origins, # ou [""] para permitir todas    
-    allow_credentials=True,     
-    allow_methods=[""],     
-    allow_headers=["*"], )
     app = Flask(__name__)
+
+    # Libera o CORS para origens específicas
+    CORS(app, resources={r"/captcha/*": {"origins": [
+        "http://localhost:3000",
+        "https://super-duper-train-gg74r669x942vx6w-3000.app.github.dev"
+    ]}})
+
     app.register_blueprint(main)
-    CORS(app)  # Libera o CORS para todas as rotas
 
     @app.route('/')
     def home():
@@ -70,7 +66,6 @@ def create_app():
 
     return app
 
-if __name__ == '__main__':  
-
+if __name__ == '__main__':
     app = create_app()
     app.run(debug=True)
