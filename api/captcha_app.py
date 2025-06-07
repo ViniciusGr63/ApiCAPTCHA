@@ -49,7 +49,11 @@ from api.captcha_routes import main
 from flask import Flask
 
 
+
 def create_app():
+    origins = [ "http://localhost:3000", # se estiver rodando localmente
+    "https://super-duper-train-gg74r669x942vx6w-3000.app.github.dev", # GitHub Codespaces   
+    ]
     app = Flask(__name__)
     app.register_blueprint(main)
 
