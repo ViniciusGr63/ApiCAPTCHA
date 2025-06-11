@@ -1,6 +1,5 @@
 # Captcha Api
 
-# Captcha API
 
 [![Documentação](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3bXEBwo5YWH0tIyNIQp8ldcdCkhDix5mofA&s)](https://apicaptcha-xzmu.onrender.com/)
 
@@ -10,9 +9,9 @@ A **Captcha API** é uma aplicação backend que oferece proteção contra bots 
 
 ## Como Funciona?
 
-- **Requisição do Captcha**: Ao acessar um formulário, fazer login ou interagir com algum recurso sensível, a API gera um desafio Captcha para o usuário.
-- **Resposta do Usuário**: O usuário realiza a tarefa proposta, que consiste em identificar uma imagem de uma forma geométrica específica.
-- **Validação da Resposta**: A API verifica se a resposta fornecida corresponde corretamente à forma que ela aprendeu a identificar (triângulo, círculo ou quadrado).
+- **Requisição ao Captcha**: Ao acessar um formulário, fazer login ou interagir com algum recurso sensível, o usuário realiza a tarefa proposta, que consiste em identificar uma imagem de uma forma geométrica específica. A API integra o desafio Captcha, recebendo a imagem escolhida pelo usuário.
+- **Validação da Resposta**: A API lê, processa e classifica a imagem com base no aprendizado de um modelo de aprendizado de máquina previamente treinado.
+- **Resposta ao Usuário**: A API devolve a classificação da forma verificada, se a resposta fornecida corresponde corretamente à forma que ela aprendeu a identificar (triângulo, círculo ou quadrado).
 
 ## Recursos e Funcionalidades
 
